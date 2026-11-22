@@ -1,0 +1,45 @@
+name: "InboxShield Email SPF, DKIM & DMARC Gate"
+description: "Audit domain MX, recursive SPF 10-lookup limits, DKIM selectors, DMARC p=quarantine/reject policy, MTA-STS, and BIMI in CI."
+author: "OmniForge Studio"
+branding:
+  icon: "mail"
+  color: "blue"
+
+inputs:
+  domain:
+    description: "Domain name to audit (e.g. yourcompany.com)"
+    required: true
+  min-score:
+    description: "Minimum passing deliverability score (0-100)"
+    required: false
+    default: "70"
+  require-dmarc-enforcement:
+    description: "Fail if DMARC policy is missing or set to p=none (true/false)"
+    required: false
+    default: "false"
+
+outputs:
+  score:
+    description: "Deliverability score (0-100)"
+    value: ${{ steps.inboxshield.outputs.score }}
+  spf-lookups:
+    description: "Recursive SPF DNS lookup count (RFC 7208 max is 10)"
+    value: ${{ steps.inboxshield.outputs.spf_lookups }}
+  dmarc-policy:
+    description: "Detected DMARC policy (none, quarantine, reject, or missing)"
+    value: ${{ steps.inboxshield.outputs.dmarc_policy }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run InboxShield DNS Deliverability Audit
+      id: inboxshield
+      shell: bash
+      env:
+        INPUT_DOMAIN: ${{ inputs.domain }}
+        INPUT_MIN_SCORE: ${{ inputs.min-score }}
+        INPUT_REQ_DMARC: ${{ inputs.require-dmarc-enforcement }}
+      run: |
+        node "${{ github.action_path }}/src/audit.mjs" "$INPUT_DOMAIN" \
+          --min-score "$INPUT_MIN_SCORE" \
+          --require-dmarc "$INPUT_REQ_DMARC"

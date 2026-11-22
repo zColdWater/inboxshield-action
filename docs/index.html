@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>InboxShield GitHub Action (@v1) — Continuous SPF, DKIM &amp; DMARC Deliverability Gate</title>
+  <meta name="description" content="Catch SPF 10-lookup PermErrors, missing DKIM keys, and weak DMARC p=none policies in GitHub Actions. Free 6-phase DNS workbench + $2 Launch Special flattened SPF/DMARC fix." />
+  <link rel="canonical" href="https://zcoldwater.github.io/inboxshield-action/" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "InboxShield GitHub Action & v7.0 Email Deliverability Workbench",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Linux, macOS, Windows, Web",
+    "url": "https://inbox-checker.appwrite.network",
+    "offers": {
+      "@type": "Offer",
+      "price": "2.00",
+      "priceCurrency": "USD",
+      "url": "https://omnipulse-x402.appwrite.network/go/gumroad/inboxshield"
+    }
+  }
+  </script>
+  <style>
+    :root { --bg:#07142b; --panel:#0d2142; --border:#1e3a68; --text:#f1f5f9; --muted:#94a3b8; --sky:#38bdf8; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    a { color:var(--sky); text-decoration:none; }
+    .wrap { max-width:980px; margin:0 auto; padding:0 22px; }
+    header { border-bottom:1px solid var(--border); padding:16px 0; }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+    .btn { display:inline-block; padding:11px 18px; border-radius:8px; font-weight:700; font-size:0.92rem; background:var(--sky); color:#041326; }
+    .btn-sec { background:var(--panel); color:var(--text); border:1px solid var(--border); }
+    .hero { padding:56px 0 36px; text-align:center; }
+    h1 { font-size:clamp(1.9rem,4vw,2.9rem); line-height:1.14; margin:12px auto 16px; max-width:800px; }
+    pre { background:#040d1d; border:1px solid var(--border); border-radius:10px; padding:16px; text-align:left; overflow-x:auto; color:#e0f2fe; max-width:740px; margin:24px auto; font-size:0.86rem; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin:32px 0 48px; }
+    .card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:20px; }
+    footer { border-top:1px solid var(--border); padding:26px 0 40px; text-align:center; color:var(--muted); font-size:0.86rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <strong style="color:#fff;">InboxShield Action (@v1)</strong>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+        <a href="https://inbox-checker.appwrite.network/?ref=pages-inboxshield-action" rel="noopener">6-Phase DNS Workbench</a>
+        <a href="https://github.com/zColdWater/inboxshield-action" rel="noopener">GitHub Repo</a>
+        <a class="btn" href="https://omnipulse-x402.appwrite.network/go/gumroad/inboxshield" rel="noopener">Unlock Exact DNS Fix ($2 ~~$9~~)</a>
+      </div>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <p style="color:var(--sky);font-weight:700;margin:0;">GITHUB ACTION · SPF 10-LOOKUP CAP · DKIM · DMARC · BIMI</p>
+      <h1>Prevent Silent Spam-Folder Drops Before Adding Another SaaS Sender</h1>
+      <p style="color:var(--muted);max-width:680px;margin:0 auto 24px;">Every new include in SPF brings your domain closer to RFC 7208's hard 10-lookup PermError ceiling. Audit MX, SPF trees, DKIM keys, and DMARC policies automatically in GitHub Actions.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn" href="https://inbox-checker.appwrite.network/?ref=pages-inboxshield-hero" rel="noopener">Run Free 6-Phase Domain Audit</a>
+        <a class="btn btn-sec" href="https://inbox-checker.appwrite.network/?domain=cnn.com&amp;ref=pages-inboxshield-sample" rel="noopener">Preview Live DMARC &amp; BIMI Trace</a>
+      </div>
+      <pre>- uses: zColdWater/inboxshield-action@v1
+  with:
+    domain: "yourcompany.com"
+    min-score: "80"
+    require-dmarc-enforcement: "true"</pre>
+    </section>
+    <section class="cards">
+      <div class="card">
+        <h3 style="margin-top:0;">Recursive SPF Lookup Counter</h3>
+        <p style="color:var(--muted);margin:0;">Walks nested <code>include:</code> and <code>redirect=</code> chains to catch <code>&gt;10</code> DNS lookup PermErrors and dangerous <code>+all</code> directives.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;">12-ESP DKIM &amp; DMARC Gate</h3>
+        <p style="color:var(--muted);margin:0;">Verifies active Google Workspace, Microsoft 365, Resend, Postmark, and Mailgun selectors alongside DMARC <code>p=quarantine/reject</code> enforcement.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0;">$2 Single-Domain Fix Unlock</h3>
+        <p style="color:var(--muted);margin:0;">Diagnose why emails land in spam for free, then unlock conflict-free flattened SPF + exact registrar TXT records for $2 (reg. $9).</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">
+      <a href="https://inbox-checker.appwrite.network/?ref=pages-inboxshield-footer">InboxShield Workbench</a> ·
+      <a href="https://brand-checker.appwrite.network/?ref=pages-inboxshield-footer">Free 78-TLD Domain Checker</a> ·
+      <a href="https://omnipulse-x402.appwrite.network/go/gumroad/launch-stack">Complete 3-in-1 Suite ($5)</a> ·
+      <a href="./llms.txt">llms.txt</a>
+    </div>
+  </footer>
+</body>
+</html>

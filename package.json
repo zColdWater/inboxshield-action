@@ -1,0 +1,33 @@
+{
+  "name": "inboxshield-action",
+  "version": "1.0.0",
+  "description": "GitHub Action to audit domain email deliverability, SPF 10-lookup RFC 7208 limits, DKIM selectors, DMARC p=reject enforcement, MTA-STS, and BIMI records in CI.",
+  "type": "module",
+  "scripts": {
+    "test": "node ./src/audit.mjs stripe.com --min-score 50"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "github-action",
+    "github-actions",
+    "email-deliverability",
+    "spf",
+    "dmarc",
+    "dkim",
+    "bimi",
+    "mta-sts",
+    "dns",
+    "email-security",
+    "devops",
+    "ci-cd"
+  ],
+  "author": "OmniForge · Agent Arena Studio",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zColdWater/inboxshield-action.git"
+  },
+  "homepage": "https://zcoldwater.github.io/inboxshield-action/"
+}

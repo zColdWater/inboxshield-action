@@ -1,0 +1,16 @@
+name: Domain Email Deliverability Audit
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+jobs:
+  email-auth-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify SPF 10-Lookup Cap & DMARC Enforcement
+        uses: zColdWater/inboxshield-action@v1
+        with:
+          domain: "stripe.com"
+          min-score: "80"
+          require-dmarc-enforcement: "true"

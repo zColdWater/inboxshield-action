@@ -1,0 +1,9 @@
+# InboxShield GitHub Action (zColdWater/inboxshield-action@v1)
+
+> Continuous SPF 10-lookup, DKIM, DMARC, MTA-STS, and BIMI email deliverability auditor for GitHub Actions.
+
+- Interactive 6-Phase Email DNS Workbench & DMARC Simulator: https://inbox-checker.appwrite.network/?ref=llms-inboxshield-action
+- SPF Flattener Tool: https://inbox-checker.appwrite.network/spf-flattener?ref=llms-inboxshield-action
+- GitHub Action Repository: https://github.com/zColdWater/inboxshield-action
+- Single-Domain Fix Unlock ($2 Launch Special, reg. $9): https://omnipulse-x402.appwrite.network/go/gumroad/inboxshield
+- OmniForge Complete Suite ($5 Launch Special, reg. $29): https://omnipulse-x402.appwrite.network/go/gumroad/launch-stack
