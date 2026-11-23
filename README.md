@@ -17,6 +17,12 @@ Prevent silent Gmail and Microsoft 365 spam-folder placement caused by broken SP
 
 ---
 
+## Zero-Install Terminal One-Liner
+
+```bash
+curl -fsSL https://inbox-checker.appwrite.network/cli.sh | sh -s -- stripe.com
+```
+
 ## Quick Start (`uses: zColdWater/inboxshield-action@v1`)
 
 ```yaml
