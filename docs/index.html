@@ -66,6 +66,7 @@
       <input id="heroDomInput" type="text" placeholder="stripe.com" aria-label="Domain to audit" required style="flex:1;min-width:220px;padding:10px 14px;border-radius:7px;border:1px solid #374151;background:#0b0f17;color:#fff;font-size:15px">
       <button type="submit" style="padding:10px 18px;border-radius:7px;border:0;background:#10b981;color:#052e16;font-weight:700;font-size:14.5px;cursor:pointer">Run Free Email DNS Audit -></button>
     </form>
+    <div id="heroQuickScoreResult" style="display:none"></div>
     <pre style="margin:12px 0 0;font-size:12.5px">curl -fsSL https://inbox-checker.appwrite.network/cli.sh | sh -s -- stripe.com</pre>
   </div>
       <p style="color:var(--muted);max-width:680px;margin:0 auto 24px;">Every new include in SPF brings your domain closer to RFC 7208's hard 10-lookup PermError ceiling. Audit MX, SPF trees, DKIM keys, and DMARC policies automatically in GitHub Actions.</p>
@@ -113,14 +114,59 @@
         else fetch("https://omnipulse-x402.appwrite.network/v1/telemetry", { method: "POST", body: payload, keepalive: true }).catch(function(){});
       } catch (e) {}
     }
+    window.__opTrack = opTrack;
     var f = document.getElementById("heroInstantScanForm");
-    if (f) {
+    var box = document.getElementById("heroQuickScoreResult");
+    if (f && box) {
       f.addEventListener("submit", function(e){
         e.preventDefault();
-        var d = (document.getElementById("heroDomInput").value || "").trim().replace(/^https?:\/\//i, "").split("/")[0];
-        if (!d) return;
-        opTrack("scan", { target: d });
-        window.open("https://inbox-checker.appwrite.network/?domain=" + encodeURIComponent(d), "_blank", "noopener");
+        var raw = (document.getElementById("heroDomInput").value || "").trim().replace(/^https?:\/\//i, "").split("/")[0].toLowerCase();
+        if (!raw || raw.indexOf(".") === -1) return;
+        opTrack("scan", { target: raw, mode: "inline_quick_score" });
+        box.style.display = "block";
+        box.innerHTML = '<div style="padding:12px;color:#a7f3d0;font-size:13.5px;text-align:left">Running live 3-pillar audit (VibeShield Security + InboxShield DNS + CiteReady AI Search) on <strong>' + raw.replace(/[<>&"']/g, "") + '</strong>...</div>';
+        fetch("https://omnipulse-x402.appwrite.network/v1/quick-score?domain=" + encodeURIComponent(raw))
+          .then(function(r){ return r.json(); })
+          .then(function(data){
+            if (!data || !data.ok || !data.engines) throw new Error("unavailable");
+            var ov = data.overall || { score: 0, grade: "-", totalIssues: 0 };
+            var v = data.engines.vibeshield || {};
+            var ib = data.engines.inboxshield || {};
+            var cr = data.engines.citeready || {};
+            var dom = String(data.domain || raw).replace(/[<>&"']/g, "");
+            var suiteUrl = "https://omnipulse-x402.appwrite.network/checkout?domain=" + encodeURIComponent(dom) + "&score=" + encodeURIComponent(ov.score) + "&issues=" + encodeURIComponent(ov.totalIssues) + "&ref=" + encodeURIComponent("inboxshield-action");
+            opTrack("scan_complete", { target: dom, score: ov.score, issues: ov.totalIssues });
+            box.innerHTML =
+              '<div style="margin-top:12px;padding:14px;border-radius:8px;background:#080d14;border:1px solid #1f2937;text-align:left">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">' +
+                  '<strong style="color:#fff;font-size:15px">' + dom + ' — Overall Readiness: ' + ov.score + '/100 (Grade ' + ov.grade + ') · ' + ov.totalIssues + ' issues detected</strong>' +
+                  '<a href="' + suiteUrl + '" rel="noopener" onclick="window.__opTrack && window.__opTrack(\'paywall_click\',{target:\'' + dom + '\',tier:\'suite_5usd\'})" style="background:#10b981;color:#052e16;font-weight:700;padding:7px 13px;border-radius:6px;font-size:13px;text-decoration:none">Unlock All 3 Fix Packs ($5 Launch Special)</a>' +
+                '</div>' +
+                '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:8px;font-size:12.5px">' +
+                  '<div style="padding:10px;border-radius:6px;background:#111827;border:1px solid #1f2937">' +
+                    '<div style="color:#9ca3af">VibeShield Security</div>' +
+                    '<div style="color:#fff;font-weight:700;font-size:15px;margin:3px 0">' + (v.score ?? "-") + '/100 (' + (v.grade || "-") + ') · ' + (v.issues ?? 0) + ' issues</div>' +
+                    '<a href="' + (v.reportUrl || "https://vibe-checker.appwrite.network/?url=" + encodeURIComponent(dom)) + '" target="_blank" rel="noopener">Full Report</a> · ' +
+                    '<a href="' + (v.checkoutUrl || "https://omnipulse-x402.appwrite.network/checkout/vibeshield?domain=" + encodeURIComponent(dom)) + '" rel="noopener" onclick="window.__opTrack && window.__opTrack(\'paywall_click\',{target:\'' + dom + '\',tier:\'vibeshield_2usd\'})" style="color:#4ade80;font-weight:700">Fix Pack ($2)</a>' +
+                  '</div>' +
+                  '<div style="padding:10px;border-radius:6px;background:#111827;border:1px solid #1f2937">' +
+                    '<div style="color:#9ca3af">InboxShield Email DNS</div>' +
+                    '<div style="color:#fff;font-weight:700;font-size:15px;margin:3px 0">' + (ib.score ?? "-") + '/100 (' + (ib.grade || "-") + ') · ' + (ib.issues ?? 0) + ' issues</div>' +
+                    '<a href="' + (ib.reportUrl || "https://inbox-checker.appwrite.network/?domain=" + encodeURIComponent(dom)) + '" target="_blank" rel="noopener">Full Report</a> · ' +
+                    '<a href="' + (ib.checkoutUrl || "https://omnipulse-x402.appwrite.network/checkout/inboxshield?domain=" + encodeURIComponent(dom)) + '" rel="noopener" onclick="window.__opTrack && window.__opTrack(\'paywall_click\',{target:\'' + dom + '\',tier:\'inboxshield_2usd\'})" style="color:#4ade80;font-weight:700">Fix Pack ($2)</a>' +
+                  '</div>' +
+                  '<div style="padding:10px;border-radius:6px;background:#111827;border:1px solid #1f2937">' +
+                    '<div style="color:#9ca3af">CiteReady AI Search</div>' +
+                    '<div style="color:#fff;font-weight:700;font-size:15px;margin:3px 0">' + (cr.score ?? "-") + '/100 (' + (cr.grade || "-") + ') · ' + (cr.issues ?? 0) + ' issues</div>' +
+                    '<a href="' + (cr.reportUrl || "https://citeready-checker.appwrite.network/?url=" + encodeURIComponent(dom)) + '" target="_blank" rel="noopener">Full Report</a> · ' +
+                    '<a href="' + (cr.checkoutUrl || "https://omnipulse-x402.appwrite.network/checkout/citeready?domain=" + encodeURIComponent(dom)) + '" rel="noopener" onclick="window.__opTrack && window.__opTrack(\'paywall_click\',{target:\'' + dom + '\',tier:\'citeready_2usd\'})" style="color:#4ade80;font-weight:700">Fix Pack ($2)</a>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+          })
+          .catch(function(){
+            window.open("https://vibe-checker.appwrite.network/?url=" + encodeURIComponent(raw), "_blank", "noopener");
+          });
       });
     }
     opTrack("pageview");
