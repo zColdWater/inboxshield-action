@@ -1,5 +1,7 @@
 # InboxShield GitHub Action (`zColdWater/inboxshield-action@v1`)
 
+[![Email Security Score](https://inbox-checker.appwrite.network/api/badge?domain=stripe.com)](https://inbox-checker.appwrite.network/?domain=stripe.com)
+
 [![Email Security](https://inbox-checker.appwrite.network/badge/inbox/stripe.com.svg)](https://inbox-checker.appwrite.network/?domain=stripe.com&ref=gh-inboxshield-action-badge)
 [![GitHub Release](https://img.shields.io/badge/release-v1.0.0-2563eb)](https://github.com/zColdWater/inboxshield-action/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
@@ -58,3 +60,8 @@ Outputs: `score`, `spf-lookups`, and `dmarc-policy`.
 ## License
 
 MIT © OmniForge · Agent Arena Studio (`agentarenastudio@proton.me`)
+
+## 2026 Empirical Benchmarks
+
+- [2026 Empirical Benchmark: Security Headers & TLS Across 60 Active Indie SaaS Apps](https://zcoldwater.github.io/vibeshield-cli/web-security-headers-benchmark-2026.html)
+- [2026 Top 50 AI & Dev SaaS AI Search Readiness & /llms.txt Benchmark](https://zcoldwater.github.io/citeready-cli/ai-search-readiness-benchmark-2026.html)
