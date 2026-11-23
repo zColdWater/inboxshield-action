@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free GitHub Actions SPF, DKIM & DMARC Email DNS Drift Monitor Builder | InboxShield</title>
+  <meta name="description" content="Generate a zero-dependency GitHub Actions workflow to monitor domain SPF 10-lookup limits, DKIM selectors, DMARC p=reject policies, and MX redundancy.">
+  <link rel="canonical" href="https://zcoldwater.github.io/inboxshield-action/ci-email-dns-workflow-builder.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free GitHub Actions SPF, DKIM & DMARC Email DNS Drift Monitor Builder | InboxShield">
+  <meta property="og:description" content="Generate a zero-dependency GitHub Actions workflow to monitor domain SPF 10-lookup limits, DKIM selectors, DMARC p=reject policies, and MX redundancy.">
+  <meta property="og:url" content="https://zcoldwater.github.io/inboxshield-action/ci-email-dns-workflow-builder.html">
+  <meta property="og:image" content="https://brand-checker.appwrite.network/assets/cover-inboxshield-2usd.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://brand-checker.appwrite.network/assets/cover-inboxshield-2usd.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"GitHub Actions SPF / DKIM / DMARC Drift Monitor Builder","applicationCategory":"DeveloperApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://zcoldwater.github.io/inboxshield-action/ci-email-dns-workflow-builder.html"}</script>
+  <style>
+    :root{--bg:#f8fafc;--card:#ffffff;--ink:#0f172a;--muted:#475569;--line:#e2e8f0;--accent:#2563eb}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+    .wrap{max-width:960px;margin:0 auto;padding:36px 20px 64px}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
+    h1{font-size:28px;margin:8px 0 10px;letter-spacing:-0.02em}
+    .lede{color:var(--muted);margin:0 0 24px;max-width:760px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+    label{display:block;font-size:13px;font-weight:600;margin:12px 0 5px}
+    input,select{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:7px;font-size:14px}
+    pre{background:#0f172a;color:#bae6fd;padding:16px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.5;margin:10px 0}
+    .btn{display:inline-block;padding:9px 16px;border-radius:7px;border:0;background:var(--ink);color:#fff;font-weight:600;font-size:13.5px;cursor:pointer;text-decoration:none}
+    .btn-primary{background:#10b981;color:#052e16;font-weight:700}
+    .cta-strip{background:#0f172a;color:#fff;border-radius:12px;padding:20px;margin-top:24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+    .cta-strip p{margin:4px 0 0;color:#cbd5e1;font-size:14px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">CI/CD Email Deliverability Guardrail · Zero Dependencies</div>
+    <h1>GitHub Actions SPF / DKIM / DMARC Drift Monitor Builder</h1>
+    <p class="lede">45% of top SaaS & AI startups still lack strict DMARC p=reject enforcement and 15% sit at the 8-10/10 SPF lookup danger zone. Generate a free CI workflow to catch email DNS regressions automatically.</p>
+    <div class="grid">
+      <div class="card">
+        <h2 style="margin-top:0;font-size:18px">1. Configure CI Gate</h2>
+        <label for="dom">Target Domain or URL</label>
+        <input id="dom" type="text" value="example.com">
+        <label for="minScore">Minimum Passing Score (0-100)</label>
+        <input id="minScore" type="number" min="0" max="100" value="80">
+        <label for="dkim-selectors">DKIM Selectors (comma-separated, optional)</label>
+        <input id="dkim-selectors" type="text" value="google,default,s1">
+        <label for="sched">Trigger Schedule</label>
+        <select id="sched">
+          <option value="both">Pull Request + Weekly Monday Cron</option>
+          <option value="pr">Pull Request &amp; Push to main Only</option>
+          <option value="daily">Daily 06:00 UTC Drift Monitor</option>
+        </select>
+      </div>
+      <div class="card">
+        <h2 style="margin-top:0;font-size:18px">2. Copy <code>.github/workflows/audit.yml</code></h2>
+        <pre id="ymlOut"></pre>
+        <button type="button" class="btn" id="copyBtn">Copy GitHub Actions YAML</button>
+      </div>
+    </div>
+    <div class="cta-strip">
+      <div>
+        <strong style="font-size:17px">Run an Instant Interactive Audit Before Adding to CI</strong>
+        <p>Inspect every DNS record, crawler rule, and tailored copy-paste remediation ($2 Launch Special unlocks complete fix pack).</p>
+      </div>
+      <a class="btn btn-primary" id="liveBtn" href="https://inbox-checker.appwrite.network" target="_blank" rel="noopener">Run Live 6-Phase Email DNS Audit -></a>
+    </div>
+  </div>
+  <script>
+  (function(){
+    function opTrack(ev, extra) {
+      try {
+        var payload = JSON.stringify(Object.assign({ site: "inboxshield-action-gen", event: ev, path: location.pathname, ref: document.referrer || "", ts: Date.now() }, extra || {}));
+        if (navigator.sendBeacon) navigator.sendBeacon("https://omnipulse-x402.appwrite.network/v1/telemetry", payload);
+        else fetch("https://omnipulse-x402.appwrite.network/v1/telemetry", { method: "POST", body: payload, keepalive: true }).catch(function(){});
+      } catch (e) {}
+    }
+    function clean(v) { return (v || "example.com").trim().replace(/^https?:\/\//i, "").split("/")[0] || "example.com"; }
+    function update() {
+      var d = clean(document.getElementById("dom").value);
+      var sc = document.getElementById("minScore").value || "80";
+      var ex = (document.getElementById("dkim-selectors").value || "").trim();
+      var mode = document.getElementById("sched").value;
+      var onBlock = mode === "pr"
+        ? "on:\n  push:\n    branches: [main]\n  pull_request:"
+        : (mode === "daily" ? "on:\n  schedule:\n    - cron: '0 6 * * *'\n  workflow_dispatch:" : "on:\n  pull_request:\n  schedule:\n    - cron: '0 8 * * 1'\n  workflow_dispatch:");
+      var targetVal = "zColdWater/inboxshield-action".indexOf("inboxshield") !== -1 ? d : ("https://" + d);
+      var targetKey = "zColdWater/inboxshield-action".indexOf("inboxshield") !== -1 ? "domain" : "url";
+      var extraLine = ex ? ("\n          dkim-selectors: '" + ex + "'") : "";
+      var yml = "name: Pre-Deploy Audit\n\n" + onBlock + "\n\njobs:\n  audit:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: zColdWater/inboxshield-action@v1\n        with:\n          " + targetKey + ": '" + targetVal + "'\n          min-score: '" + sc + "'" + extraLine;
+      document.getElementById("ymlOut").textContent = yml;
+      var param = "zColdWater/inboxshield-action".indexOf("inboxshield") !== -1 ? "domain" : "url";
+      document.getElementById("liveBtn").href = "https://inbox-checker.appwrite.network/?" + param + "=" + encodeURIComponent(d);
+    }
+    ["dom", "minScore", "dkim-selectors", "sched"].forEach(function(id){
+      document.getElementById(id).addEventListener("input", update);
+      document.getElementById(id).addEventListener("change", update);
+    });
+    document.getElementById("copyBtn").addEventListener("click", function(e){
+      navigator.clipboard.writeText(document.getElementById("ymlOut").textContent || "");
+      e.target.textContent = "Copied Workflow YAML";
+      setTimeout(function(){ e.target.textContent = "Copy GitHub Actions YAML"; }, 1600);
+      opTrack("copy_workflow");
+    });
+    document.getElementById("liveBtn").addEventListener("click", function(){
+      opTrack("scan", { target: clean(document.getElementById("dom").value) });
+    });
+    update();
+    opTrack("pageview");
+  })();
+  </script>
+</body>
+</html>
